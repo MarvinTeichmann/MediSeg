@@ -12,7 +12,8 @@ import os
 import numpy as np
 import scipy as scp
 import random
-from seg_utils import seg_utils as seg
+from utils.kitti_devkit import seg_utils as seg
+import utils.overlay_utils as ov
 
 
 import tensorflow as tf
@@ -103,12 +104,13 @@ def evaluation(hypes, logits, labels):
 def eval_image(hypes, gt_image, cnn_image):
     """."""
     thresh = np.array(range(0, 256))/255.0
-    road_gt = gt_image[:, :, 2] > 0
-    valid_gt = gt_image[:, :, 0] > 0
 
-    FN, FP, posNum, negNum = seg.evalExp(road_gt, cnn_image,
+    background_color = np.array(hypes['data']['background_color'])
+    gt_bool = (gt_image != background_color)
+
+    FN, FP, posNum, negNum = seg.evalExp(gt_bool, cnn_image,
                                          thresh, validMap=None,
-                                         validArea=valid_gt)
+                                         validArea=None)
 
     return FN, FP, posNum, negNum
 
@@ -144,7 +146,7 @@ def tensor_eval(hypes, sess, image_pl, softmax):
                 output_im = output[0][:, 1].reshape(shape[0], shape[1])
 
                 if i % 5 == 0:
-                    ov_image = seg.make_overlay(image, output_im)
+                    ov_image = ov.make_soft_overlay(image, output_im)
                     name = os.path.basename(image_file)
                     image_list.append((name, ov_image))
 
