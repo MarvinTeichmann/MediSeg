@@ -1,0 +1,6 @@
+[submodule "AP5/tensorflow-fcn"]
+	path = AP5/tensorflow-fcn
+	url = git@github.com:MarvinTeichmann/tensorflow-fcn.git
+[submodule "TensorVision"]
+	path = TensorVision
+	url = git@github.com:TensorVision/TensorVision.git
