@@ -53,7 +53,7 @@ def _load_gt_file(hypes, data_file=None):
             assert os.path.exists(gt_image_file), \
                 "File does not exist: %s" % gt_image_file
             image = scipy.misc.imread(image_file)
-            gt_image = scp.misc.imread(gt_image_file)
+            gt_image = scp.misc.imread(gt_image_file, flatten=True)
 
             yield image, gt_image
 
@@ -79,6 +79,10 @@ def _make_data_gen(hypes, phase, data_dir):
         gt_bool = (gt_image != background_color)
 
         if phase == 'val':
+            assert image.shape[:-1] == gt_image.shape, \
+                ("image.shape: {0},"
+                 "gt_image.shape: {1}").format(image.shape[:-1],
+                                               gt_bool.shape)
             yield image, gt_bool
         elif phase == 'train':
 
@@ -108,6 +112,10 @@ def jitter_input(hypes, image, gt_image):
 
     if crop_chance > random.random():
         image, gt_image = random_crop(image, gt_image, max_crop)
+
+    assert image.shape[:-1] == gt_image.shape, \
+        "image.shape: {0}, gt_image.shape: {1}".format(image.shape[:-1],
+                                                       gt_image.shape)
 
     assert(image.shape[:-1] == gt_image.shape)
     return image, gt_image
@@ -218,13 +226,6 @@ def _read_processed_image(hypes, q, phase):
         # image = tf.image.random_hue(image, max_delta=0.05)
         # image = tf.image.random_saturation(image, lower=0.8, upper=1.2)
 
-    if 'whitening' not in hypes['arch'] or \
-            hypes['arch']['whitening']:
-        image = tf.image.per_image_whitening(image)
-        logging.info('Whitening is enabled.')
-    else:
-        logging.info('Whitening is disabled.')
-
     return image, label
 
 
@@ -293,15 +294,15 @@ def inputs(hypes, q, phase, data_dir):
     # Display the training images in the visualizer.
     tf.image_summary(tensor_name + '/image', image)
 
-    # road = tf.expand_dims(tf.to_float(label[:, :, :]), 3)
-    # tf.image_summary(tensor_name + '/gt_image', road)
+    label = tf.expand_dims(label, 3)
+    tf.image_summary(tensor_name + '/gt_image', tf.to_float(label))
 
     return image, label
 
 
 def main():
     """main."""
-    with open('hypes/medseg.json', 'r') as f:
+    with open('../hypes/medseg.json', 'r') as f:
         hypes = json.load(f)
 
     q = {}
@@ -327,8 +328,8 @@ def main():
 
         for i in itertools.count():
             image, gt = sess.run([image_batch, label_batch])
-            scp.misc.imshow(image[0])
-            scp.misc.imshow(gt[0])
+            # scp.misc.imshow(image[0])
+            # scp.misc.imshow(gt[0])
 
         coord.request_stop()
         coord.join(threads)

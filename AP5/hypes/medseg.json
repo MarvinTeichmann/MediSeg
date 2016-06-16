@@ -1,9 +1,9 @@
 {
   "model": {
-    "input_file": "../medseg_input.py",
-    "architecture_file" : "../fcn32_vgg.py",
-    "objective_file": "../objective.py",
-    "optimizer_file" : "../adam_optimizer.py",
+    "input_file": "../model/segmentation_input.py",
+    "architecture_file" : "../model/fcn32_vgg.py",
+    "objective_file": "../model/objective.py",
+    "optimizer_file" : "../model/adam_optimizer.py",
     "path" : ".."
   },
 

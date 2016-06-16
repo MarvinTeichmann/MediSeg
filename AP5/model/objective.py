@@ -6,8 +6,6 @@ from __future__ import absolute_import
 from __future__ import division
 from __future__ import print_function
 
-import ipdb
-
 import os
 import numpy as np
 import scipy as scp
@@ -44,8 +42,8 @@ def loss(hypes, logits, labels):
 
     with tf.name_scope('loss'):
         logits = tf.reshape(logits, (-1, 2))
-        labels = tf.to_float(tf.reshape(labels, (-1)))
-        shape = [logits.get_shape()[0], 2]
+        labels = tf.to_int64(tf.reshape(labels, (-1,)))
+        # shape = [logits.get_shape()[0], 2]
         # epsilon = tf.constant(value=hypes['solver']['epsilon'], shape=shape)
         # logits = logits + epsilon
 
