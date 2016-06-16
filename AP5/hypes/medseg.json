@@ -1,9 +1,10 @@
 {
   "model": {
-    "input_file": "model/medseg_input.py",
-    "architecture_file" : "model/VGG8.py",
-    "objective_file": "model/softmax_classifier.py",
-    "optimizer_file" : "model/adam_optimizer.py"
+    "input_file": "../medseg_input.py",
+    "architecture_file" : "../fcn32_vgg.py",
+    "objective_file": "../objective.py",
+    "optimizer_file" : "../adam_optimizer.py",
+    "path" : ".."
   },
 
   "data": {
@@ -28,10 +29,10 @@
 
   "solver": {
       "opt": null,
-      "batch_size": 64,
+      "batch_size": 1,
       "threads": 4,
       "epsilon": 0.00001,
-      "learning_rate": 1e-4,
-      "max_steps": 100000
+      "learning_rate": 1e-6,
+      "max_steps": 10000
   }
 }
