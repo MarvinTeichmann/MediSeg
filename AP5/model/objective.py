@@ -144,7 +144,7 @@ def tensor_eval(hypes, sess, image_pl, softmax):
                 output_im = output[0][:, 1].reshape(shape[0], shape[1])
 
                 if i % 5 == 0:
-                    ov_image = ov.make_soft_overlay(image, output_im)
+                    ov_image = ov.make_soft_overlay(image, 1-output_im)
                     name = os.path.basename(image_file)
                     image_list.append((name, ov_image))
 
