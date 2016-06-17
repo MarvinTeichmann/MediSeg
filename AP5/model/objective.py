@@ -50,7 +50,7 @@ def loss(hypes, logits, labels):
         cross_entropy = tf.nn.sparse_softmax_cross_entropy_with_logits(
             logits, labels, name='xentropy')
 
-        head = tf.to_float(labels)*hypes['solver']['head']
+        head = 1 + tf.to_float(labels)*(hypes['solver']['head']-1)
 
         cross_entropy = cross_entropy*head
 
