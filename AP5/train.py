@@ -57,6 +57,10 @@ def main(_):
         logging.info("f: %s", f)
         hypes = json.load(f)
     utils.load_plugins()
+
+    if 'TV_DIR_RUNS' in os.environ:
+        os.environ['TV_DIR_RUNS'] = os.path.join(os.environ['TV_DIR_RUNS'],
+                                                 'MediSeg')
     utils.set_dirs(hypes, tf.app.flags.FLAGS.hypes)
 
     utils._add_paths_to_sys(hypes)

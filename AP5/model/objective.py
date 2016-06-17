@@ -50,6 +50,10 @@ def loss(hypes, logits, labels):
         cross_entropy = tf.nn.sparse_softmax_cross_entropy_with_logits(
             logits, labels, name='xentropy')
 
+        head = tf.to_float(labels)*hypes['solver']['head']
+
+        cross_entropy = cross_entropy*head
+
         cross_entropy_mean = tf.reduce_mean(
             cross_entropy, name='xentropy_mean')
         tf.add_to_collection('losses', cross_entropy_mean)
@@ -143,7 +147,7 @@ def tensor_eval(hypes, sess, image_pl, softmax):
                 output = sess.run([softmax], feed_dict=feed_dict)
                 output_im = output[0][:, 1].reshape(shape[0], shape[1])
 
-                if i % 5 == 0:
+                if True:
                     ov_image = ov.make_soft_overlay(image, 1-output_im)
                     name = os.path.basename(image_file)
                     image_list.append((name, ov_image))
@@ -164,5 +168,16 @@ def tensor_eval(hypes, sess, image_pl, softmax):
     eval_list.append(('MaxF1', 100*eval_dict['MaxF']))
     eval_list.append(('BestThresh', 100*eval_dict['BestThresh']))
     eval_list.append(('Average Precision', 100*eval_dict['AvgPrec']))
+
+    accuracy = eval_dict['accuracy']
+    eval_list.append(('Max Accuricy', 100*np.max(accuracy)))
+    eval_list.append(('Acc. Tresh',
+                      100*eval_dict['thresh'][np.argmax(accuracy)]))
+
+    ind5 = np.where(eval_dict['thresh'] >= 0.5)[0][0]
+    ind25 = np.where(eval_dict['thresh'] >= 0.25)[0][0]
+
+    eval_list.append(('Accuracy @ 0.5', 100*accuracy[ind5]))
+    eval_list.append(('Accuracy @ 0.25', 100*accuracy[ind25]))
 
     return eval_list, image_list
