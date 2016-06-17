@@ -1,0 +1,8 @@
+2016-06-16 22:13:57,017 root INFO Results of Evaluation.
+2016-06-16 22:13:57,017 root INFO MaxF1 :  85.9009 
+2016-06-16 22:13:57,017 root INFO BestThresh :  31.7647 
+2016-06-16 22:13:57,017 root INFO Average Precision :  88.5051 
+2016-06-16 22:13:57,017 root INFO Max Accuracy :  97.1320 
+2016-06-16 22:13:57,017 root INFO Acc. Tresh :  41.9608 
+2016-06-16 22:13:57,018 root INFO Accuracy @ 0.5 :  97.1103 
+2016-06-16 22:13:57,018 root INFO Accuracy @ 0.25 :  97.0139 
