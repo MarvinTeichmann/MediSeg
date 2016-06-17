@@ -23,7 +23,7 @@ Results can be evaluated in `Tensorboard` or written to disk using `tv-analysis`
 
 The output of `tv-analysis` on `Model 2` can be found in `Results`. `tv-analysis` estimates the metrics of the final weights and writes out the overlay of the validation images. 
 
-![img_07_raw.png](Results/img_07_raw.png =100x20) ![img_40_raw.png](Results/img_40_raw.png =100x20)
+![img_07_raw.png](Results/img_07_raw.png | width=100) ![img_40_raw.png](Results/img_40_raw.png | width=100)
 
 ## Evaluation in Tensorboard
 
