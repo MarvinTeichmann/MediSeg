@@ -8,7 +8,15 @@ To train the model, move `data/val.txt` and `data/train.txt` to the folder which
 $ python train.py
 ```
 
-Results can be evaluated in `Tensorboard` or written to disk using `tv-analysis`. 
+Results can be evaluated in `Tensorboard` or written to disk using `tv-analyze`. 
+
+Keep in mind that you need to initialize the submodule `tensorflow_fcn`:
+
+```bash
+$ git submodule update --init
+```
+
+See this submodules repository for its requirements.
 
 
 ## Results
@@ -19,9 +27,9 @@ Results can be evaluated in `Tensorboard` or written to disk using `tv-analysis`
 | 2     | FCN32_VGG  |  LR: 1e-5            | 85.90% |  88.51% | 0.32  | 97.13 %     | 0.42         |  97.11%    | 97.01 %     |
 | 3     | FCN32_VGG  |  LR: 1e-5   head: 2  |        |         |       |             |              |            |             |
 
-## Evaluation in `tv-analysis`
+## Evaluation in `tv-analyze`
 
-The output of `tv-analysis` on `Model 2` can be found in `Results`. `tv-analysis` estimates the metrics of the final weights and writes out the overlay of the validation images. 
+The output of `tv-analyze` on `Model 2` can be found in `Results`. `tv-analyze` estimates the metrics of the final weights and writes out the overlay of the validation images. 
 
 <img src="Results/img_01_raw.png" width="170"> <img src="Results/img_03_raw.png" width="170"> <img src="Results/img_07_raw.png" width="170"> <img src="Results/img_08_raw.png" width="170"> <img src="Results/img_40_raw.png" width="170">
 
