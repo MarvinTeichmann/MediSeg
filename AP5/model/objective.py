@@ -118,6 +118,25 @@ def eval_image(hypes, gt_image, cnn_image):
 
 
 def tensor_eval(hypes, sess, image_pl, softmax):
+    """Do evaluate in python.
+
+    Parameters
+    ----------
+    hypes : dict
+        Hyperparameters
+    sess : tensorflow session
+        The session which has the computational graph.
+    image_pl: placeholder
+        A placeholder for images
+    softmax: tensor
+        The softmax output.
+    Returns
+    -------
+    eval_list: List of tuples
+        Contains numerical evaluation result and name of the metric.
+    image_list: List of images
+        List of images drawn as overlay.
+    """
     data_dir = hypes['dirs']['data_dir']
     data_file = hypes['data']['val_file']
     data_file = os.path.join(data_dir, data_file)
